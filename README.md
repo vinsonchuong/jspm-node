@@ -1,6 +1,5 @@
 # jspm-node
 [![Build Status](https://travis-ci.org/vinsonchuong/jspm-node.svg?branch=master)](https://travis-ci.org/vinsonchuong/jspm-node)
-[![Code Climate](https://codeclimate.com/github/vinsonchuong/jspm-node.png)](https://codeclimate.com/github/vinsonchuong/jspm-node)
 
 ## Installing
 `jspm-node` is available as an
