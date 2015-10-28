@@ -39,18 +39,22 @@ describe('jspm-node', () => {
             'isomorphic-fetch': '*'
           }
         });
-      });
+        await childProcess.exec('npm install', {cwd: 'project'});
+      }, 60000);
 
       it('installs both the npm and the jspm version of the package', async () => {
-        await childProcess.exec('npm install', {cwd: 'project'});
-
         expect(await fse.readJson(path.resolve('project/node_modules/isomorphic-fetch/package.json')))
           .toEqual(jasmine.objectContaining({name: 'isomorphic-fetch'}));
 
         const {stdout: version} = await childProcess.exec('npm show --json isomorphic-fetch version');
         expect(await fse.readJson(path.resolve(`project/jspm_packages/npm/isomorphic-fetch@${JSON.parse(version)}/package.json`)))
           .toEqual(jasmine.objectContaining({name: 'isomorphic-fetch'}));
-      }, 60000);
+      });
+
+      it('does not add a jspm key to the package.json', async () => {
+        const packageJson = await fse.readJson(path.resolve('project/package.json'));
+        expect(packageJson.jspm).toBeUndefined();
+      });
     });
 
     afterEach(async () => {
