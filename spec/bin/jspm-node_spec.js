@@ -5,7 +5,9 @@ import * as fse from 'fs-extra-promise-es6';
 async function updateJson(filePath, overrides) {
   const absolutePath = path.resolve(filePath);
   const packageJson = await fse.readJson(absolutePath);
-  await fse.writeJson(absolutePath, Object.assign(packageJson, overrides));
+  await fse.writeJson(absolutePath, Object.assign(packageJson, overrides), {
+    spaces: 2
+  });
 }
 
 describe('jspm-node', () => {
@@ -55,6 +57,17 @@ describe('jspm-node', () => {
         const packageJson = await fse.readJson(path.resolve('project/package.json'));
         expect(packageJson.jspm).toBeUndefined();
       });
+
+      it('can install again without the jspm key', async () => {
+        await childProcess.exec('npm install', {cwd: 'project'});
+
+        expect(await fse.readJson(path.resolve('project/node_modules/isomorphic-fetch/package.json')))
+          .toEqual(jasmine.objectContaining({name: 'isomorphic-fetch'}));
+
+        const {stdout: version} = await childProcess.exec('npm show --json isomorphic-fetch version');
+        expect(await fse.readJson(path.resolve(`project/jspm_packages/npm/isomorphic-fetch@${JSON.parse(version)}/package.json`)))
+          .toEqual(jasmine.objectContaining({name: 'isomorphic-fetch'}));
+      }, 60000);
     });
 
     afterEach(async () => {

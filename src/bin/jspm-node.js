@@ -11,7 +11,7 @@ async function run() {
   for (const dependency of Object.keys(packageJson.dependencies || {})) {
     await jspm.install(dependency, `npm:${dependency}`);
   }
-  await fse.writeJson('package.json', packageJson);
+  await fse.writeJson('package.json', packageJson, {spaces: 2});
 }
 
 run().catch(error => {
