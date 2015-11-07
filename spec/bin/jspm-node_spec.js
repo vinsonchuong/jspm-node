@@ -38,19 +38,19 @@ describe('jspm-node', () => {
       beforeEach(async () => {
         await updateJson('project/package.json', {
           dependencies: {
-            'isomorphic-fetch': '*'
+            lodash: '*'
           }
         });
         await childProcess.exec('npm install', {cwd: 'project'});
       }, 60000);
 
       it('installs both the npm and the jspm version of the package', async () => {
-        expect(await fse.readJson(path.resolve('project/node_modules/isomorphic-fetch/package.json')))
-          .toEqual(jasmine.objectContaining({name: 'isomorphic-fetch'}));
+        expect(await fse.readJson(path.resolve('project/node_modules/lodash/package.json')))
+          .toEqual(jasmine.objectContaining({name: 'lodash'}));
 
-        const {stdout: version} = await childProcess.exec('npm show --json isomorphic-fetch version');
-        expect(await fse.readJson(path.resolve(`project/jspm_packages/npm/isomorphic-fetch@${JSON.parse(version)}/package.json`)))
-          .toEqual(jasmine.objectContaining({name: 'isomorphic-fetch'}));
+        const {stdout: version} = await childProcess.exec('npm show --json lodash version');
+        expect(await fse.readJson(path.resolve(`project/jspm_packages/npm/lodash@${JSON.parse(version)}/package.json`)))
+          .toEqual(jasmine.objectContaining({name: 'lodash'}));
       });
 
       it('does not add a jspm key to the package.json', async () => {
@@ -61,12 +61,12 @@ describe('jspm-node', () => {
       it('can install again without the jspm key', async () => {
         await childProcess.exec('npm install', {cwd: 'project'});
 
-        expect(await fse.readJson(path.resolve('project/node_modules/isomorphic-fetch/package.json')))
-          .toEqual(jasmine.objectContaining({name: 'isomorphic-fetch'}));
+        expect(await fse.readJson(path.resolve('project/node_modules/lodash/package.json')))
+          .toEqual(jasmine.objectContaining({name: 'lodash'}));
 
-        const {stdout: version} = await childProcess.exec('npm show --json isomorphic-fetch version');
-        expect(await fse.readJson(path.resolve(`project/jspm_packages/npm/isomorphic-fetch@${JSON.parse(version)}/package.json`)))
-          .toEqual(jasmine.objectContaining({name: 'isomorphic-fetch'}));
+        const {stdout: version} = await childProcess.exec('npm show --json lodash version');
+        expect(await fse.readJson(path.resolve(`project/jspm_packages/npm/lodash@${JSON.parse(version)}/package.json`)))
+          .toEqual(jasmine.objectContaining({name: 'lodash'}));
       }, 60000);
     });
 
