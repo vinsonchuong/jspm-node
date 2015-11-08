@@ -59,6 +59,13 @@ describe('jspm-node', () => {
         expect(packageJson.jspm).toBeUndefined();
       });
 
+      it('puts config.js inside of jspm_packages', async () => {
+        expect(await fs.readdir(path.resolve('project')))
+          .not.toContain('config.js');
+        expect(await fs.readdir(path.resolve('project/jspm_packages')))
+          .toContain('config.js');
+      });
+
       it('can install again without the jspm key', async () => {
         await childProcess.exec('npm install', {cwd: 'project'});
 

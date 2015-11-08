@@ -9,6 +9,12 @@ async function run() {
   const registryDir = path.resolve(tmpDir, 'registry');
 
   const packageJson = await fse.readJson('package.json');
+  await fse.writeJson('package.json', Object.assign({
+    jspm: {
+      configFile: 'jspm_packages/config.js',
+      dependencies: {}
+    }
+  }, packageJson));
 
   jspm.setPackagePath('.');
   await jspmCore.init(null, false);
