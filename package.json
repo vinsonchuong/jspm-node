@@ -1,7 +1,7 @@
 {
   "name": "jspm-node",
   "version": "0.0.1",
-  "description": "Adds Node.js and npm support to jspm",
+  "description": "Automatically installs the jspm version of each npm package dependency",
   "keywords": [],
   "homepage": "https://github.com/vinsonchuong/jspm-node",
   "bugs": "https://github.com/vinsonchuong/jspm-node/issues",
