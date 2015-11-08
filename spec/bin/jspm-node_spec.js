@@ -1,5 +1,6 @@
 import path from 'path';
 import {childProcess} from 'node-promise-es6';
+import {fs} from 'node-promise-es6';
 import * as fse from 'fs-extra-promise-es6';
 
 async function updateJson(filePath, overrides) {
@@ -69,6 +70,24 @@ describe('jspm-node', () => {
           .toEqual(jasmine.objectContaining({name: 'lodash'}));
       }, 60000);
     });
+
+    it('can install jspm packages from both GitHub and npm', async () => {
+      await updateJson('project/package.json', {
+        dependencies: {
+          lodash: '*',
+          d3: '*'
+        }
+      });
+      await childProcess.exec('npm install', {cwd: 'project'});
+
+      const {stdout: lodashVersion} = await childProcess.exec('npm show --json lodash version');
+      expect(await fse.readJson(path.resolve(`project/jspm_packages/npm/lodash@${JSON.parse(lodashVersion)}/package.json`)))
+        .toEqual(jasmine.objectContaining({name: 'lodash'}));
+
+      const {stdout: d3Version} = await childProcess.exec('npm show --json d3 version');
+      expect(await fs.readFile(path.resolve(`project/jspm_packages/github/mbostock/d3@${JSON.parse(d3Version)}.js`)))
+        .toMatch(/module\.exports/);
+    }, 60000);
 
     afterEach(async () => {
       await fse.remove('project');
