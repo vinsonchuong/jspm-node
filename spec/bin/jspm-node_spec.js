@@ -18,7 +18,7 @@ describe('jspm-node', () => {
       await childProcess.exec('npm init -y', {cwd: 'project'});
       await updateJson('project/package.json', {
         scripts: {
-          prepublish: 'babel-node ../src/bin/jspm-node.js'
+          prepublish: 'babel-node --presets es2015,stage-0 --plugins transform-runtime ../src/bin/jspm-node.js'
         }
       });
     });
