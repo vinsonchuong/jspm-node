@@ -7,7 +7,11 @@
   "bugs": "https://github.com/vinsonchuong/jspm-node/issues",
   "license": "MIT",
   "author": "Vinson Chuong <vinsonchuong@gmail.com>",
-  "files": ["LICENSE", "README.md", "src"],
+  "files": [
+    "LICENSE",
+    "README.md",
+    "src"
+  ],
   "bin": {
     "jspm-node": "src/bin/jspm-node.js"
   },
