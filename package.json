@@ -26,7 +26,7 @@
   "dependencies": {
     "node-promise-es6": "^0.3.0",
     "fs-extra-promise-es6": "^0.1.0",
-    "jspm": "^0.16.19"
+    "jspm": "^0.16.23"
   },
   "devDependencies": {
     "babel-cli": "^6.3.17",
