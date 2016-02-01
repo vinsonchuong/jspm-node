@@ -1,6 +1,6 @@
 {
   "name": "jspm-node",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Automatically installs the jspm version of each npm package dependency",
   "keywords": [],
   "homepage": "https://github.com/vinsonchuong/jspm-node",
