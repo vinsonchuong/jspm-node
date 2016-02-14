@@ -82,7 +82,7 @@ describe('jspm-node', () => {
       await updateJson('project/package.json', {
         dependencies: {
           lodash: '*',
-          d3: '*'
+          angular: '*'
         }
       });
       await childProcess.exec('npm install', {cwd: 'project'});
@@ -91,8 +91,8 @@ describe('jspm-node', () => {
       expect(await fse.readJson(path.resolve(`project/jspm_packages/npm/lodash@${JSON.parse(lodashVersion)}/package.json`)))
         .toEqual(jasmine.objectContaining({name: 'lodash'}));
 
-      const {stdout: d3Version} = await childProcess.exec('npm show --json d3 version');
-      expect(await fs.readFile(path.resolve(`project/jspm_packages/github/mbostock/d3@${JSON.parse(d3Version)}.js`)))
+      const {stdout: angularVersion} = await childProcess.exec('npm show --json angular version');
+      expect(await fs.readFile(path.resolve(`project/jspm_packages/github/angular/bower-angular@${JSON.parse(angularVersion)}.js`)))
         .toMatch(/module\.exports/);
     }, 60000);
 
