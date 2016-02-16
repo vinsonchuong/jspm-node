@@ -29,7 +29,9 @@ async function run() {
   await fse.writeJson('package.json', packageJson, {spaces: 2});
 }
 
-run().catch(error => {
-  process.stderr.write((error.stack || error) + '\n');
+run().catch((error) => {
+  process.stderr.write(`${error.stack || error}\n`);
+  /* eslint-disable lines-around-comment, no-process-exit */
   process.exit(1);
+  /* eslint-enable lines-around-comment, no-process-exit */
 });
